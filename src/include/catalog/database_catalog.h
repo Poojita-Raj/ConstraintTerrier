@@ -7,11 +7,14 @@
 #include <vector>
 
 #include "catalog/catalog_defs.h"
+#include "catalog/index_schema.h"
 #include "catalog/postgres/pg_class.h"
 #include "catalog/postgres/pg_language.h"
 #include "catalog/postgres/pg_proc.h"
 #include "catalog/postgres/pg_type.h"
 #include "catalog/schema.h"
+#include "storage/index/index.h"
+#include "storage/sql_table.h"
 #include "transaction/transaction_context.h"
 #include "transaction/transaction_defs.h"
 
@@ -599,7 +602,7 @@ class DatabaseCatalog {
   void BootstrapLanguages(common::ManagedPointer<transaction::TransactionContext> txn);
 
   /**
-   * Bootstraps the built-in procs found in pg_proc
+   * Bootstraps the built-in procs found in pg_procs
    * @param txn transaction to insert into catalog with
    */
   void BootstrapProcs(common::ManagedPointer<transaction::TransactionContext> txn);
