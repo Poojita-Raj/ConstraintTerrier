@@ -174,7 +174,6 @@ namespace terrier::execution::ast {
   F(IndexIteratorGetSlot, indexIteratorGetSlot)                         \
   F(IndexIteratorGetTablePR, indexIteratorGetTablePR)                   \
   F(IndexIteratorFree, indexIteratorFree)                               \
-                                                                        \
   /* Projected Row Operations */                                        \
   F(PRSetBool, prSetBool)                                               \
   F(PRSetTinyInt, prSetTinyInt)                                         \
@@ -229,6 +228,10 @@ namespace terrier::execution::ast {
   F(IndexInsert, indexInsert)                                           \
   F(IndexInsertUnique, indexInsertUnique)                               \
   F(IndexDelete, indexDelete)                                           \
+  F(VerifyTableInsertConstraint, verifyTableInsertConstraint)           \
+  F(DeleteCascade, deleteCascade)                                       \
+  F(UpdateCascade, updateCascade)                                       \
+  F(UpdateVerify, updateVerify)                                         \
   F(StorageInterfaceFree, storageInterfaceFree)                         \
                                                                         \
   /* Parameter calls */                                                 \
