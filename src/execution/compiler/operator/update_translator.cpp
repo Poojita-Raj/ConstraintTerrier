@@ -214,7 +214,9 @@ void UpdateTranslator::GenIndexDelete(FunctionBuilder *builder, const catalog::i
 }
 
 void UpdateTranslator::GenUpdateVerify(FunctionBuilder *builder) {
-  auto verify_constraint_call = codegen_->OneArgCall(ast::Builtin::UpdateVerify, updater_, true);
+    auto delete_slot = child_translator_->GetSlot();
+    std::vector<ast::Expr *> update_cascad_args{codegen_->PointerTo(updater_), delete_slot};
+  auto verify_constraint_call = codegen_->BuiltinCall(ast::Builtin::UpdateVerify, std::move(update_cascad_args));
   auto cond = codegen_->UnaryOp(parsing::Token::Type::BANG, verify_constraint_call);
   builder->StartIfStmt(cond);
   Abort(builder);
