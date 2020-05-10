@@ -54,11 +54,12 @@ void UpdateTranslator::Consume(FunctionBuilder *builder) {
     }
     return;
   }
+
   GenUpdateCascade(builder);
   // Non indexed updates just update.
   GenTableUpdate(builder);
-
   GenUpdateVerify(builder);
+
 }
 
 void UpdateTranslator::DeclareUpdater(terrier::execution::compiler::FunctionBuilder *builder) {
