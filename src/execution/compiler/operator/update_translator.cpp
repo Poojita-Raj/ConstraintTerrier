@@ -42,6 +42,8 @@ void UpdateTranslator::Consume(FunctionBuilder *builder) {
   GetUpdatePR(builder);
   FillPRFromChild(builder);
 
+
+
   if (op_->GetIndexedUpdate()) {
     // Indexed updates re-insert into the table
     GenTableInsert(builder);
