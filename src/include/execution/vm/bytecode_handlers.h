@@ -26,7 +26,7 @@
 #include "execution/util/hash.h"
 #include "metrics/metrics_defs.h"
 #include "planner/plannodes/update_plan_node.h"
-#include "util/time_util.h"
+//#include "util/time_util.h"
 #include "parser/expression/constant_value_expression.h"
 
 // All VM terrier::bytecode op handlers must use this macro

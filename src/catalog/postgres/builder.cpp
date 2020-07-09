@@ -19,7 +19,7 @@
 #include "parser/expression/column_value_expression.h"
 #include "parser/expression/constant_value_expression.h"
 #include "storage/index/index_builder.h"
-#include "type/transient_value_factory.h"
+#include "type/type_id.h"
 
 namespace terrier::catalog::postgres {
 
@@ -31,7 +31,7 @@ constexpr uint8_t MAX_NAME_LENGTH = 63;  // This mimics PostgreSQL behavior
  * @return NULL expression with the correct type
  */
 static parser::ConstantValueExpression MakeNull(type::TypeId col_type) {
-  return parser::ConstantValueExpression(type::TransientValueFactory::GetNull(col_type));
+  return parser::ConstantValueExpression(col_type);
 }
 
 Schema Builder::GetDatabaseTableSchema() {
