@@ -1566,7 +1566,10 @@ constraint_oid_t DatabaseCatalog::CreatePKConstraint(common::ManagedPointer<tran
   auto *const constraints_insert_redo =
       txn->StageWrite(db_oid_, postgres::CONSTRAINT_TABLE_OID, pg_constraints_all_cols_pri_);
   auto *const constraints_insert_pr = constraints_insert_redo->Delta();
-  std::string concol_str = OidVectorToSpaceSeparatedString<col_oid_t>(pk_cols);
+  //std::string concol_str = OidVectorToSpaceSeparatedString<col_oid_t>(pk_cols);
+  const auto concol_name = storage::StorageUtil::CreateVarlen<col_oid_t>(pk_cols);
+  std::string concol_str = VarlentoString(concol_name);
+
   FillConstraintPR(constraints_insert_pr, constraint_oid, name, ns, postgres::ConstraintType::PRIMARY_KEY, false, false,
                    true, table, index, INVALID_CONSTRAINT_OID, INVALID_TABLE_OID, postgres::FKActionType::NOACT,
                    postgres::FKActionType::NOACT, postgres::FKMatchType::FULL, true, 0, false, concol_str,
@@ -1599,9 +1602,16 @@ constraint_oid_t DatabaseCatalog::CreateFKConstraint(common::ManagedPointer<tran
       txn->StageWrite(db_oid_, postgres::CONSTRAINT_TABLE_OID, pg_constraints_all_cols_pri_);
   auto *const constraints_insert_pr = constraints_insert_redo->Delta();
 
-  std::string concol_str = OidVectorToSpaceSeparatedString<col_oid_t>(src_cols);
-  std::string confkcol_str = OidVectorToSpaceSeparatedString<col_oid_t>(sink_cols);
-  std::string consrc_index_str = OidVectorToSpaceSeparatedString<index_oid_t>({src_index});
+  //std::string concol_str = OidVectorToSpaceSeparatedString<col_oid_t>(src_cols);
+  //std::string confkcol_str = OidVectorToSpaceSeparatedString<col_oid_t>(sink_cols);
+  //std::string consrc_index_str = OidVectorToSpaceSeparatedString<index_oid_t>({src_index});
+  const auto concol_name = storage::StorageUtil::CreateVarlen<col_oid_t>(src_cols);
+  std::string concol_str = VarlentoString(concol_name);
+  const auto confkcol_name = storage::StorageUtil::CreateVarlen<col_oid_t>(sink_cols);
+  std::string confkcol_str = VarlentoString(confkcol_name);
+  const auto consrc_name = storage::StorageUtil::CreateVarlen<index_oid_t>({src_index});
+  std::string consrc_index_str = VarlentoString(consrc_name);
+
   // TODO(pg_constraint): we temporarily store the src table index in the exclusion op varchar
   FillConstraintPR(constraints_insert_pr, constraint_oid, name, ns, postgres::ConstraintType::FOREIGN_KEY, false, false,
                    true, src_table, sink_index, INVALID_CONSTRAINT_OID, sink_table, update_action, delete_action,
@@ -1816,7 +1826,9 @@ constraint_oid_t DatabaseCatalog::CreateUNIQUEConstraint(common::ManagedPointer<
       txn->StageWrite(db_oid_, postgres::CONSTRAINT_TABLE_OID, pg_constraints_all_cols_pri_);
   auto *const constraints_insert_pr = constraints_insert_redo->Delta();
 
-  std::string concol_str = OidVectorToSpaceSeparatedString<col_oid_t>(unique_cols);
+  //std::string concol_str = OidVectorToSpaceSeparatedString<col_oid_t>(unique_cols);
+  const auto concol_name = storage::StorageUtil::CreateVarlen<col_oid_t>(unique_cols);
+  std::string concol_str = VarlentoString(concol_name);
   FillConstraintPR(constraints_insert_pr, constraint_oid, name, ns, postgres::ConstraintType::UNIQUE, false, false,
                    true, table, index, INVALID_CONSTRAINT_OID, INVALID_TABLE_OID, postgres::FKActionType::NOACT,
                    postgres::FKActionType::NOACT, postgres::FKMatchType::FULL, true, 0, false, concol_str,
